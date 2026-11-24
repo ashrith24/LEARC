@@ -1,0 +1,19 @@
+{
+  "name": "complete-ui-ux-encyclopedia",
+  "version": "1.0.0",
+  "private": true,
+  "description": "V1 Static UI Encyclopedia — React + JavaScript, bundled with esbuild into a single static page",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node dev.mjs",
+    "check:content": "node scripts/run-check.mjs check-content.js",
+    "check:demos": "node scripts/run-check.mjs check-demos.js"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.2"
+  }
+}

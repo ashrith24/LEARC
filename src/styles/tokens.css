@@ -1,0 +1,45 @@
+/*
+VOICE    Calm, exact, editorial — a reference you can study in for hours.
+IDEA     A printed design encyclopaedia set at night: numbered plates, ruled margins, annotations.
+PICTURE  Oversized type and live specimens; one controlled band of blue light per view.
+COLOUR   Charcoal layers (#0B0D12 → #1E2430), electric blue #2BA6FF for interaction only.
+TYPE     Schibsted Grotesk display · Inter text · JetBrains Mono labels and numbering.
+LAYOUT   Sidebar index · reading column ≤ 74ch · sticky "On this page"; single column < 900px.
+*/
+:root {
+  color-scheme: dark;
+  /* Surfaces */
+  --bg-0: #0B0D12; --bg-1: #10141C; --bg-2: #171B24; --bg-3: #1E2430; --bg-4: #262D3B;
+  /* Blue */
+  --blue: #2BA6FF; --blue-strong: #1488FC; --blue-deep: #14448C; --blue-soft: #7FBCF6;
+  --blue-wash: rgba(43, 166, 255, .10); --blue-wash-2: rgba(43, 166, 255, .18); --blue-glow: rgba(43, 166, 255, .35);
+  /* Text */
+  --tx-1: #F9FAFC; --tx-2: #B8C0CC; --tx-3: #8B96A6; /* muted adjusted from #7E8999 to reach 4.5:1 on --bg-2 */
+  /* Borders */
+  --bd: #252C38; --bd-subtle: #1D2531; --bd-strong: #323B4B; --bd-active: #2BA6FF;
+  /* Semantic */
+  --ok: #3DD68C; --warn: #F5B544; --err: #FF6B6B; --info: #2BA6FF;
+  --ok-wash: rgba(61, 214, 140, .12); --warn-wash: rgba(245, 181, 68, .12); --err-wash: rgba(255, 107, 107, .12);
+  /* Type */
+  --f-display: 'Schibsted Grotesk', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-text: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --fs-xs: .75rem; --fs-sm: .875rem; --fs-md: 1rem; --fs-lg: 1.0625rem; --fs-xl: 1.25rem;
+  --fs-h3: 1.25rem; --fs-h2: clamp(1.5rem, 1.2rem + 1vw, 1.875rem); --fs-h1: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+  --fs-display: clamp(3.5rem, 1rem + 10.8vw, 12.5rem);
+  /* Space (4pt) */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px; --s-12: 48px; --s-16: 64px; --s-20: 80px; --s-24: 96px;
+  /* Shape */
+  --r-xs: 4px; --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-full: 999px;
+  /* Elevation (dark: lighter surface + hairline + soft shadow) */
+  --sh-1: 0 1px 0 rgba(255,255,255,.03) inset, 0 1px 2px rgba(0,0,0,.4);
+  --sh-2: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px rgba(0,0,0,.45);
+  --sh-3: 0 1px 0 rgba(255,255,255,.05) inset, 0 24px 64px rgba(0,0,0,.6);
+  /* Motion */
+  --dur-1: 120ms; --dur-2: 200ms; --dur-3: 320ms; --ease-out: cubic-bezier(.2, .8, .2, 1); --ease-in: cubic-bezier(.4, 0, 1, 1); --ease: cubic-bezier(.4, 0, .2, 1);
+  /* Layers */
+  --z-sticky: 20; --z-header: 30; --z-drawer: 40; --z-overlay: 50; --z-modal: 60; --z-toast: 70;
+  /* Layout */
+  --header-h: 60px; --sidebar-w: 288px; --toc-w: 232px; --measure: 74ch;
+}
+@media (prefers-reduced-motion: reduce) { :root { --dur-1: 0ms; --dur-2: 0ms; --dur-3: 0ms; } }

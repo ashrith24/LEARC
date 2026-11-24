@@ -1,0 +1,153 @@
+/* ───────── Style specimens (subject 16). Each block restyles one shared card. ───────── */
+.sty { padding: clamp(18px, 4vw, 36px); border-radius: 14px; display: grid; place-items: center; overflow: hidden; position: relative; }
+.sty-card { width: min(380px, 100%); display: grid; gap: 10px; padding: 22px; position: relative; }
+.sty-over { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.sty-h { font-size: 24px; margin: 0; line-height: 1.1; color: inherit; font-family: inherit; letter-spacing: normal; }
+.sty-p { margin: 0; font-size: 14.5px; line-height: 1.55; }
+.sty-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.sty-chip { font-size: 12px; padding: 3px 10px; font-weight: 600; }
+.sty-lbl { display: grid; gap: 4px; font-size: 12.5px; font-weight: 600; }
+.sty-in { height: 38px; padding: 0 10px; font: inherit; font-weight: 400; font-size: 14px; width: 100%; }
+.sty-btn, .sty-btn2 { height: 40px; padding: 0 18px; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; border: 0; }
+
+/* Minimalism */
+.sty-minimalism { background: #FAFAF9; color: #18181B; font-family: var(--f-text); }
+.sty-minimalism .sty-card { padding: 28px 8px; } .sty-minimalism .sty-over { color: #71717A; } .sty-minimalism .sty-h { font-weight: 600; letter-spacing: -.02em; } .sty-minimalism .sty-p { color: #52525B; }
+.sty-minimalism .sty-chip { color: #18181B; border-bottom: 1px solid #18181B; padding: 0; } .sty-minimalism .sty-in { border: 0; border-bottom: 1px solid #A1A1AA; background: none; color: #18181B; }
+.sty-minimalism .sty-btn { background: #18181B; color: #fff; border-radius: 0; } .sty-minimalism .sty-btn2 { background: none; color: #18181B; text-decoration: underline; }
+/* Flat */
+.sty-flat-design { background: #3B82F6; color: #fff; font-family: var(--f-text); }
+.sty-flat-design .sty-card { background: #fff; color: #1E293B; border-radius: 6px; } .sty-flat-design .sty-over { color: #3B82F6; font-weight: 800; } .sty-flat-design .sty-h { font-weight: 800; } .sty-flat-design .sty-p { color: #475569; }
+.sty-flat-design .sty-chip { background: #10B981; color: #fff; border-radius: 4px; } .sty-flat-design .sty-chip.alt { background: #F59E0B; }
+.sty-flat-design .sty-in { border: 2px solid #CBD5E1; border-radius: 4px; background: #F1F5F9; color: #1E293B; } .sty-flat-design .sty-btn { background: #EF4444; color: #fff; border-radius: 4px; } .sty-flat-design .sty-btn2 { background: #E2E8F0; color: #1E293B; border-radius: 4px; }
+/* Swiss */
+.sty-swiss-style { background: #fff; color: #000; font-family: 'Inter', Helvetica, Arial, sans-serif; background-image: linear-gradient(90deg, rgba(228,0,43,.07) 1px, transparent 1px); background-size: 40px 100%; }
+.sty-swiss-style .sty-card { border-top: 8px solid #E4002B; padding: 18px 0 0; } .sty-swiss-style .sty-over { color: #E4002B; font-weight: 700; } .sty-swiss-style .sty-h { font-size: 40px; font-weight: 800; letter-spacing: -.04em; line-height: .95; } .sty-swiss-style .sty-p { font-size: 13.5px; max-width: 30ch; }
+.sty-swiss-style .sty-chip { border: 1.5px solid #000; padding: 2px 8px; } .sty-swiss-style .sty-chip.alt { background: #000; color: #fff; } .sty-swiss-style .sty-in { border: 0; border-bottom: 2px solid #000; background: none; color: #000; }
+.sty-swiss-style .sty-btn { background: #E4002B; color: #fff; } .sty-swiss-style .sty-btn2 { background: none; color: #000; border: 2px solid #000; }
+/* Monochromatic */
+.sty-monochromatic { background: #0B1F3A; color: #E3EEFB; font-family: var(--f-text); }
+.sty-monochromatic .sty-card { background: #12305A; border-radius: 14px; } .sty-monochromatic .sty-over { color: #8DB8EC; } .sty-monochromatic .sty-p { color: #B9D3F2; }
+.sty-monochromatic .sty-chip { background: #1D4A85; color: #E3EEFB; border-radius: 20px; } .sty-monochromatic .sty-chip.alt { background: #0B1F3A; } .sty-monochromatic .sty-in { background: #0B1F3A; border: 1px solid #2A5C9E; border-radius: 8px; color: #E3EEFB; }
+.sty-monochromatic .sty-btn { background: #8DB8EC; color: #0B1F3A; border-radius: 8px; } .sty-monochromatic .sty-btn2 { background: #1D4A85; color: #E3EEFB; border-radius: 8px; }
+/* Material-inspired */
+.sty-material-inspired { background: #F3EDF7; color: #1D1B20; font-family: 'Inter', Roboto, sans-serif; }
+.sty-material-inspired .sty-card { background: #FFFBFE; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.2), 0 2px 6px rgba(0,0,0,.08); } .sty-material-inspired .sty-over { color: #6750A4; font-weight: 600; } .sty-material-inspired .sty-h { font-weight: 500; } .sty-material-inspired .sty-p { color: #49454F; }
+.sty-material-inspired .sty-chip { border: 1px solid #79747E; border-radius: 8px; color: #49454F; font-weight: 500; } .sty-material-inspired .sty-chip.alt { background: #E8DEF8; border-color: #E8DEF8; color: #1D192B; }
+.sty-material-inspired .sty-in { border: 1px solid #79747E; border-radius: 4px; background: none; color: #1D1B20; } .sty-material-inspired .sty-btn { background: #6750A4; color: #fff; border-radius: 20px; font-weight: 500; } .sty-material-inspired .sty-btn2 { background: none; color: #6750A4; border-radius: 20px; font-weight: 500; }
+/* Fluent-style */
+.sty-fluent-style { background: #F5F5F5; color: #242424; font-family: 'Inter', 'Segoe UI', sans-serif; }
+.sty-fluent-style .sty-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,.14), 0 0 2px rgba(0,0,0,.12); } .sty-fluent-style .sty-over { color: #616161; } .sty-fluent-style .sty-h { font-weight: 600; font-size: 20px; } .sty-fluent-style .sty-p { color: #424242; font-size: 14px; }
+.sty-fluent-style .sty-chip { background: #EBF3FC; color: #0F6CBD; border-radius: 4px; } .sty-fluent-style .sty-chip.alt { background: #F0F0F0; color: #424242; }
+.sty-fluent-style .sty-in { border: 1px solid #D1D1D1; border-bottom-color: #616161; border-radius: 4px; background: #fff; color: #242424; height: 32px; } .sty-fluent-style .sty-btn { background: #0F6CBD; color: #fff; border-radius: 4px; height: 32px; font-weight: 600; } .sty-fluent-style .sty-btn2 { background: #fff; color: #242424; border: 1px solid #D1D1D1; border-radius: 4px; height: 32px; font-weight: 600; }
+/* Skeuomorphism */
+.sty-skeuomorphism { background: radial-gradient(circle at 30% 20%, #6b4f2f, #3a2815); color: #3b2a12; font-family: Georgia, serif; }
+.sty-skeuomorphism .sty-card { background: linear-gradient(#f7ecd6, #e8d6b0); border-radius: 6px; box-shadow: 0 10px 24px rgba(0,0,0,.6), inset 0 1px 0 #fff; border: 1px solid #b99a63; background-image: repeating-linear-gradient(transparent 0 23px, rgba(120,90,40,.15) 23px 24px), linear-gradient(#f7ecd6, #e8d6b0); }
+.sty-skeuomorphism .sty-over { color: #8a6d3f; font-family: var(--f-text); } .sty-skeuomorphism .sty-h { text-shadow: 0 1px 0 #fff; } .sty-skeuomorphism .sty-p { color: #5a4525; }
+.sty-skeuomorphism .sty-chip { background: linear-gradient(#9fd18b, #5e9a46); color: #fff; border-radius: 12px; text-shadow: 0 -1px 0 rgba(0,0,0,.3); box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 1px 2px rgba(0,0,0,.4); } .sty-skeuomorphism .sty-chip.alt { background: linear-gradient(#ddd, #aaa); color: #333; text-shadow: 0 1px 0 #fff; }
+.sty-skeuomorphism .sty-in { background: #fff; border: 1px solid #a88b58; border-radius: 4px; box-shadow: inset 0 2px 3px rgba(0,0,0,.25); color: #333; font-family: var(--f-text); }
+.sty-skeuomorphism .sty-btn { background: linear-gradient(#6aa8ff, #2463c4); color: #fff; border-radius: 8px; border: 1px solid #1d4b94; box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 2px 3px rgba(0,0,0,.4); text-shadow: 0 -1px 0 rgba(0,0,0,.4); font-family: var(--f-text); }
+.sty-skeuomorphism .sty-btn2 { background: linear-gradient(#fafafa, #d6d6d6); color: #333; border-radius: 8px; border: 1px solid #999; box-shadow: inset 0 1px 0 #fff, 0 2px 3px rgba(0,0,0,.3); font-family: var(--f-text); }
+/* Neumorphism */
+.sty-neumorphism { background: #E0E5EC; color: #3D4852; font-family: var(--f-text); }
+.sty-neumorphism .sty-card { background: #E0E5EC; border-radius: 24px; box-shadow: 12px 12px 24px #a3b1c6, -12px -12px 24px #ffffff; } .sty-neumorphism .sty-over { color: #8492a6; } .sty-neumorphism .sty-p { color: #6b7785; }
+.sty-neumorphism .sty-chip { border-radius: 12px; box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #fff; color: #3D4852; }
+.sty-neumorphism .sty-in { border: 0; border-radius: 12px; background: #E0E5EC; box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #fff; color: #3D4852; }
+.sty-neumorphism .sty-btn { border-radius: 14px; background: #E0E5EC; color: #3D4852; box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #fff; } .sty-neumorphism .sty-btn:active { box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #fff; } .sty-neumorphism .sty-btn2 { border-radius: 14px; background: #E0E5EC; color: #8492a6; }
+/* Glassmorphism */
+.sty-glassmorphism { background: radial-gradient(at 20% 20%, #ff6ec7 0, transparent 45%), radial-gradient(at 80% 30%, #2BA6FF 0, transparent 50%), radial-gradient(at 50% 90%, #7c3aed 0, transparent 55%), #1a1033; color: #fff; font-family: var(--f-text); }
+.sty-glassmorphism .sty-card { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35); border-radius: 20px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 8px 32px rgba(0,0,0,.25); }
+.sty-glassmorphism .sty-over { color: rgba(255,255,255,.8); } .sty-glassmorphism .sty-p { color: rgba(255,255,255,.88); }
+.sty-glassmorphism .sty-chip { background: rgba(255,255,255,.2); border-radius: 20px; } .sty-glassmorphism .sty-in { background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.3); border-radius: 10px; color: #fff; }
+.sty-glassmorphism .sty-btn { background: #fff; color: #1a1033; border-radius: 12px; } .sty-glassmorphism .sty-btn2 { background: rgba(255,255,255,.18); color: #fff; border-radius: 12px; border: 1px solid rgba(255,255,255,.35); }
+/* Claymorphism */
+.sty-claymorphism { background: #FDE7F3; color: #3b2259; font-family: 'Inter', sans-serif; }
+.sty-claymorphism .sty-card { background: #C9B8FF; border-radius: 36px; box-shadow: 16px 16px 32px rgba(120,80,200,.35), inset -8px -8px 16px rgba(80,40,160,.25), inset 8px 8px 16px rgba(255,255,255,.6); } .sty-claymorphism .sty-over { color: #5b3a99; }
+.sty-claymorphism .sty-chip { background: #FFD3E8; border-radius: 20px; box-shadow: inset -3px -3px 6px rgba(200,80,140,.3), inset 3px 3px 6px #fff; } .sty-claymorphism .sty-chip.alt { background: #B5F2E1; }
+.sty-claymorphism .sty-in { background: #fff; border: 0; border-radius: 18px; box-shadow: inset 4px 4px 8px rgba(120,80,200,.25); color: #3b2259; }
+.sty-claymorphism .sty-btn { background: #FF8BC7; color: #3b2259; border-radius: 20px; box-shadow: 6px 6px 12px rgba(200,60,130,.35), inset -4px -4px 8px rgba(200,60,130,.3), inset 4px 4px 8px rgba(255,255,255,.6); } .sty-claymorphism .sty-btn2 { background: #fff; color: #3b2259; border-radius: 20px; box-shadow: inset -3px -3px 6px rgba(0,0,0,.08); }
+/* Soft UI */
+.sty-soft-ui { background: #F7F3EE; color: #3F3A36; font-family: 'Inter', sans-serif; }
+.sty-soft-ui .sty-card { background: #fff; border-radius: 22px; box-shadow: 0 20px 40px -20px rgba(120,90,60,.35); } .sty-soft-ui .sty-over { color: #B08968; } .sty-soft-ui .sty-p { color: #6F6660; }
+.sty-soft-ui .sty-chip { background: #F2E8DF; color: #8A5A3B; border-radius: 20px; } .sty-soft-ui .sty-chip.alt { background: #E5EFE8; color: #3F6B52; }
+.sty-soft-ui .sty-in { background: #FAF7F3; border: 1px solid #EDE3D9; border-radius: 14px; color: #3F3A36; } .sty-soft-ui .sty-btn { background: #D98E5F; color: #fff; border-radius: 16px; } .sty-soft-ui .sty-btn2 { background: #F2E8DF; color: #8A5A3B; border-radius: 16px; }
+/* Neobrutalism */
+.sty-neobrutalism { background: #FFF2C6; color: #000; font-family: 'Inter', sans-serif; }
+.sty-neobrutalism .sty-card { background: #fff; border: 3px solid #000; box-shadow: 8px 8px 0 #000; border-radius: 4px; } .sty-neobrutalism .sty-over { font-weight: 800; } .sty-neobrutalism .sty-h { font-weight: 900; font-size: 28px; text-transform: uppercase; }
+.sty-neobrutalism .sty-chip { background: #A6FAFF; border: 2px solid #000; } .sty-neobrutalism .sty-chip.alt { background: #FF90E8; }
+.sty-neobrutalism .sty-in { border: 3px solid #000; background: #fff; color: #000; } .sty-neobrutalism .sty-btn { background: #FFE14D; color: #000; border: 3px solid #000; box-shadow: 4px 4px 0 #000; transition: transform 80ms, box-shadow 80ms; } .sty-neobrutalism .sty-btn:active { transform: translate(4px, 4px); box-shadow: none; } .sty-neobrutalism .sty-btn2 { background: #fff; color: #000; border: 3px solid #000; }
+/* Bauhaus */
+.sty-bauhaus { background: #F2EAD3; color: #111; font-family: 'Schibsted Grotesk', 'Inter', sans-serif; }
+.sty-bauhaus::before { content: ''; position: absolute; width: 180px; height: 180px; border-radius: 50%; background: #E63946; right: -40px; top: -40px; } .sty-bauhaus::after { content: ''; position: absolute; left: -20px; bottom: -20px; border-left: 90px solid transparent; border-right: 90px solid transparent; border-bottom: 140px solid #FACC15; }
+.sty-bauhaus .sty-card { background: #fff; border-left: 14px solid #1D4ED8; z-index: 1; } .sty-bauhaus .sty-over { color: #1D4ED8; font-weight: 800; } .sty-bauhaus .sty-h { font-weight: 900; font-size: 30px; letter-spacing: -.02em; }
+.sty-bauhaus .sty-chip { background: #E63946; color: #fff; border-radius: 50%; padding: 6px 10px; } .sty-bauhaus .sty-chip.alt { background: #1D4ED8; border-radius: 0; }
+.sty-bauhaus .sty-in { border: 2px solid #111; background: #fff; color: #111; } .sty-bauhaus .sty-btn { background: #111; color: #FACC15; border-radius: 999px; } .sty-bauhaus .sty-btn2 { background: #FACC15; color: #111; }
+/* Retro */
+.sty-retro { background: #2E1F14; color: #F4E4C1; font-family: 'Roboto Slab', Georgia, serif; }
+.sty-retro .sty-card { background: #F4E4C1; color: #3B2414; border-radius: 10px; border: 4px double #C1440E; } .sty-retro .sty-over { color: #C1440E; font-family: var(--f-mono); } .sty-retro .sty-h { font-weight: 700; color: #C1440E; } .sty-retro .sty-p { color: #5C3A21; }
+.sty-retro .sty-chip { background: #E8A33D; color: #3B2414; border-radius: 20px; } .sty-retro .sty-chip.alt { background: #3E7C6B; color: #F4E4C1; }
+.sty-retro .sty-in { background: #FFF6E0; border: 2px solid #3B2414; border-radius: 6px; color: #3B2414; font-family: var(--f-mono); } .sty-retro .sty-btn { background: #C1440E; color: #F4E4C1; border-radius: 30px; } .sty-retro .sty-btn2 { background: #3E7C6B; color: #F4E4C1; border-radius: 30px; }
+/* Y2K */
+.sty-y2k { background: linear-gradient(135deg, #c8f1ff, #f3c9ff 50%, #d4ffbf); color: #1b1b4d; font-family: 'Inter', sans-serif; }
+.sty-y2k .sty-card { background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(220,230,255,.7)); border-radius: 26px; border: 2px solid #fff; box-shadow: 0 10px 30px rgba(80,60,200,.3), inset 0 2px 0 #fff; }
+.sty-y2k .sty-over { color: #7a45ff; font-weight: 800; } .sty-y2k .sty-h { font-weight: 900; font-style: italic; background: linear-gradient(90deg, #7a45ff, #ff3ea5); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sty-y2k .sty-chip { background: linear-gradient(#e9ffde, #9cf36f); border-radius: 20px; border: 1px solid #fff; } .sty-y2k .sty-chip.alt { background: linear-gradient(#ffe6f6, #ff8fd2); }
+.sty-y2k .sty-in { border-radius: 20px; border: 2px solid #b7c4ff; background: #fff; color: #1b1b4d; }
+.sty-y2k .sty-btn { border-radius: 22px; background: linear-gradient(#a8e1ff, #2f7bff); color: #fff; box-shadow: inset 0 8px 10px -6px rgba(255,255,255,.95), 0 4px 10px rgba(47,123,255,.4); border: 1px solid #1e5fd6; } .sty-y2k .sty-btn2 { border-radius: 22px; background: linear-gradient(#ffffff, #d9def5); color: #1b1b4d; border: 1px solid #b7c4ff; }
+/* Cyberpunk */
+.sty-cyberpunk { background: #07060D; color: #E6F7FF; font-family: var(--f-mono); background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 3px); }
+.sty-cyberpunk .sty-card { background: #0F0B1E; border: 1px solid #ff2bd6; clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px)); box-shadow: inset 0 0 0 1px rgba(34,227,255,.3); }
+.sty-cyberpunk .sty-over { color: #22e3ff; } .sty-cyberpunk .sty-h { color: #FCEE09; text-transform: uppercase; letter-spacing: .04em; } .sty-cyberpunk .sty-p { color: #B9C2E0; font-family: var(--f-text); }
+.sty-cyberpunk .sty-chip { color: #22e3ff; border: 1px solid #22e3ff; } .sty-cyberpunk .sty-chip.alt { color: #ff2bd6; border-color: #ff2bd6; }
+.sty-cyberpunk .sty-in { background: #000; border: 1px solid #3b2f6b; color: #22e3ff; font-family: var(--f-mono); } .sty-cyberpunk .sty-btn { background: #FCEE09; color: #000; clip-path: polygon(0 0, 100% 0, 100% 70%, 88% 100%, 0 100%); text-transform: uppercase; } .sty-cyberpunk .sty-btn2 { background: none; color: #ff2bd6; border: 1px solid #ff2bd6; text-transform: uppercase; }
+/* Futuristic */
+.sty-futuristic { background: radial-gradient(circle at 50% 120%, #0d3b66, #030712 60%); color: #D6F1FF; font-family: var(--f-text); }
+.sty-futuristic .sty-card { border: 1px solid rgba(98,210,255,.45); border-radius: 4px; background: rgba(6,20,40,.6); } .sty-futuristic .sty-card::before { content: ''; position: absolute; inset: -6px; border: 1px solid rgba(98,210,255,.15); pointer-events: none; }
+.sty-futuristic .sty-over { color: #62D2FF; font-family: var(--f-mono); } .sty-futuristic .sty-h { font-weight: 300; letter-spacing: .12em; text-transform: uppercase; } .sty-futuristic .sty-p { color: #9FC4DA; font-size: 13.5px; }
+.sty-futuristic .sty-chip { border: 1px solid #62D2FF; color: #62D2FF; font-family: var(--f-mono); font-size: 11px; } .sty-futuristic .sty-in { background: transparent; border: 0; border-bottom: 1px solid #62D2FF; color: #D6F1FF; }
+.sty-futuristic .sty-btn { background: rgba(98,210,255,.12); color: #62D2FF; border: 1px solid #62D2FF; letter-spacing: .1em; text-transform: uppercase; box-shadow: 0 0 16px rgba(98,210,255,.35); } .sty-futuristic .sty-btn2 { background: none; color: #9FC4DA; letter-spacing: .1em; text-transform: uppercase; }
+/* Editorial */
+.sty-editorial-style { background: #F4F1EA; color: #111; font-family: 'Instrument Serif', Georgia, serif; }
+.sty-editorial-style .sty-card { padding: 22px 0; border-top: 2px solid #111; border-bottom: 1px solid #111; } .sty-editorial-style .sty-over { font-family: var(--f-text); font-weight: 700; } .sty-editorial-style .sty-h { font-size: 44px; font-weight: 400; font-style: italic; letter-spacing: -.02em; line-height: .95; }
+.sty-editorial-style .sty-p { font-size: 17px; line-height: 1.45; } .sty-editorial-style .sty-p::first-letter { float: left; font-size: 46px; line-height: .85; padding: 4px 6px 0 0; }
+.sty-editorial-style .sty-chip { font-family: var(--f-text); font-weight: 700; padding: 0; text-transform: uppercase; letter-spacing: .08em; font-size: 10.5px; } .sty-editorial-style .sty-in { border: 0; border-bottom: 1px solid #111; background: none; color: #111; font-family: var(--f-text); }
+.sty-editorial-style .sty-btn { background: #111; color: #F4F1EA; font-family: var(--f-text); } .sty-editorial-style .sty-btn2 { background: none; color: #111; font-family: var(--f-text); text-decoration: underline; }
+/* Maximalism */
+.sty-maximalism { background: repeating-linear-gradient(45deg, #FF5F1F 0 20px, #7B2FF7 20px 40px, #00C2A8 40px 60px); color: #111; font-family: 'Inter', sans-serif; }
+.sty-maximalism .sty-card { background: #FFE14D; border: 4px solid #111; border-radius: 30px 4px 30px 4px; box-shadow: -10px 10px 0 #FF2E88; } .sty-maximalism .sty-over { color: #7B2FF7; font-weight: 900; } .sty-maximalism .sty-h { font-family: 'Caveat', cursive; font-size: 40px; color: #FF2E88; } .sty-maximalism .sty-p { font-family: 'Roboto Slab', serif; }
+.sty-maximalism .sty-chip { background: #00C2A8; color: #fff; border-radius: 20px; transform: rotate(-3deg); } .sty-maximalism .sty-chip.alt { background: #7B2FF7; transform: rotate(4deg); }
+.sty-maximalism .sty-in { border: 3px dashed #111; background: #fff; color: #111; border-radius: 12px; } .sty-maximalism .sty-btn { background: #FF2E88; color: #fff; border-radius: 30px; border: 3px solid #111; } .sty-maximalism .sty-btn2 { background: #fff; color: #111; border-radius: 30px; border: 3px solid #111; }
+/* Organic */
+.sty-organic-design { background: #E9EDE0; color: #2F3B2A; font-family: 'Inter', sans-serif; }
+.sty-organic-design::before { content: ''; position: absolute; width: 280px; height: 220px; left: -60px; top: -60px; background: #C7D3B0; border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+.sty-organic-design .sty-card { background: #FAF8F1; border-radius: 40px 18px 44px 22px; box-shadow: 0 16px 30px -18px rgba(60,80,40,.5); } .sty-organic-design .sty-over { color: #6B8E4E; } .sty-organic-design .sty-h { font-family: 'Instrument Serif', Georgia, serif; font-size: 30px; font-weight: 400; } .sty-organic-design .sty-p { color: #56614F; }
+.sty-organic-design .sty-chip { background: #DDE7CB; color: #3F5A2A; border-radius: 20px 8px 20px 8px; } .sty-organic-design .sty-chip.alt { background: #F1DEC6; color: #7A4E22; }
+.sty-organic-design .sty-in { background: #fff; border: 1px solid #CBD4BD; border-radius: 16px; color: #2F3B2A; } .sty-organic-design .sty-btn { background: #6B8E4E; color: #fff; border-radius: 24px 12px 24px 12px; } .sty-organic-design .sty-btn2 { background: none; color: #6B8E4E; }
+/* Illustrative */
+.sty-illustrative { background: #FFF7E8; color: #2D2A55; font-family: 'Inter', sans-serif; }
+.sty-illustrative .sty-card { background: #fff; border-radius: 18px; border: 2px solid #2D2A55; padding-top: 96px; } .sty-illustrative .sty-card::before { content: ''; position: absolute; left: 20px; right: 20px; top: 16px; height: 72px; border-radius: 12px; background: radial-gradient(circle at 25% 60%, #FFB84D 0 18px, transparent 19px), radial-gradient(circle at 70% 40%, #6C63FF 0 24px, transparent 25px), radial-gradient(circle at 50% 120%, #4DD4AC 0 40px, transparent 41px), #E8E6FF; }
+.sty-illustrative .sty-over { color: #6C63FF; font-weight: 700; } .sty-illustrative .sty-chip { background: #E8E6FF; color: #3D35C9; border-radius: 8px; } .sty-illustrative .sty-chip.alt { background: #FFE7C2; color: #8A5300; }
+.sty-illustrative .sty-in { border: 2px solid #2D2A55; border-radius: 10px; background: #fff; color: #2D2A55; } .sty-illustrative .sty-btn { background: #6C63FF; color: #fff; border-radius: 10px; border: 2px solid #2D2A55; } .sty-illustrative .sty-btn2 { background: #fff; color: #2D2A55; border-radius: 10px; border: 2px solid #2D2A55; }
+/* Gradient-led */
+.sty-gradient-led { background: radial-gradient(at 0% 0%, #ff7a59 0, transparent 50%), radial-gradient(at 100% 0%, #845ef7 0, transparent 50%), radial-gradient(at 50% 100%, #22b8cf 0, transparent 60%), #120f24; color: #fff; font-family: 'Inter', sans-serif; }
+.sty-gradient-led .sty-card { background: rgba(18,15,36,.72); border-radius: 18px; border: 1px solid transparent; background-clip: padding-box; box-shadow: 0 0 0 1px rgba(255,255,255,.15); } .sty-gradient-led .sty-over { color: #ffb199; }
+.sty-gradient-led .sty-h { font-weight: 800; background: linear-gradient(90deg, #ffb199, #c4b5fd, #99e9f2); -webkit-background-clip: text; background-clip: text; color: transparent; } .sty-gradient-led .sty-p { color: #d4d0ee; }
+.sty-gradient-led .sty-chip { background: linear-gradient(90deg, #ff7a59, #845ef7); border-radius: 20px; } .sty-gradient-led .sty-chip.alt { background: linear-gradient(90deg, #22b8cf, #845ef7); }
+.sty-gradient-led .sty-in { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); border-radius: 10px; color: #fff; } .sty-gradient-led .sty-btn { background: linear-gradient(90deg, #ff7a59, #845ef7); color: #fff; border-radius: 12px; } .sty-gradient-led .sty-btn2 { background: rgba(255,255,255,.1); color: #fff; border-radius: 12px; }
+/* Dark UI */
+.sty-dark-ui { background: #0B0D12; color: #F9FAFC; font-family: var(--f-text); }
+.sty-dark-ui .sty-card { background: #171B24; border: 1px solid #252C38; border-radius: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); } .sty-dark-ui .sty-over { color: #8B96A6; font-family: var(--f-mono); } .sty-dark-ui .sty-p { color: #B8C0CC; }
+.sty-dark-ui .sty-chip { background: rgba(61,214,140,.12); color: #8BEBBE; border-radius: 6px; } .sty-dark-ui .sty-chip.alt { background: rgba(43,166,255,.12); color: #7FBCF6; }
+.sty-dark-ui .sty-in { background: #0B0D12; border: 1px solid #323B4B; border-radius: 9px; color: #F9FAFC; } .sty-dark-ui .sty-btn { background: #1488FC; color: #fff; border-radius: 10px; } .sty-dark-ui .sty-btn2 { background: #1E2430; color: #F9FAFC; border-radius: 10px; border: 1px solid #323B4B; }
+/* Light UI */
+.sty-light-ui { background: #F4F6FA; color: #111827; font-family: var(--f-text); }
+.sty-light-ui .sty-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 14px; box-shadow: 0 4px 14px rgba(17,24,39,.06); } .sty-light-ui .sty-over { color: #6B7280; } .sty-light-ui .sty-p { color: #4B5563; }
+.sty-light-ui .sty-chip { background: #DCFCE7; color: #166534; border-radius: 6px; } .sty-light-ui .sty-chip.alt { background: #DBEAFE; color: #1E40AF; }
+.sty-light-ui .sty-in { background: #fff; border: 1px solid #D1D5DB; border-radius: 9px; color: #111827; } .sty-light-ui .sty-btn { background: #1462D9; color: #fff; border-radius: 10px; } .sty-light-ui .sty-btn2 { background: #fff; color: #111827; border-radius: 10px; border: 1px solid #D1D5DB; }
+/* High contrast */
+.sty-high-contrast { background: #000; color: #fff; font-family: var(--f-text); }
+.sty-high-contrast .sty-card { background: #000; border: 2px solid #fff; } .sty-high-contrast .sty-over { color: #FFFF00; font-weight: 700; } .sty-high-contrast .sty-h { font-weight: 800; } .sty-high-contrast .sty-p { color: #fff; }
+.sty-high-contrast .sty-chip { border: 2px solid #fff; color: #fff; } .sty-high-contrast .sty-chip.alt { border-color: #FFFF00; color: #FFFF00; }
+.sty-high-contrast .sty-in { background: #000; border: 2px solid #fff; color: #fff; } .sty-high-contrast .sty-in:focus { outline: 3px solid #FFFF00; outline-offset: 2px; }
+.sty-high-contrast .sty-btn { background: #FFFF00; color: #000; border: 2px solid #FFFF00; } .sty-high-contrast .sty-btn2 { background: #000; color: #fff; border: 2px solid #fff; text-decoration: underline; }
+.sty-high-contrast .sty-btn:focus-visible, .sty-high-contrast .sty-btn2:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
