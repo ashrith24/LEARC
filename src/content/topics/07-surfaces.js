@@ -86,6 +86,17 @@ export const topics = [
         definition: 'A surface treatment is the way panels and controls are rendered: flat color, paper-like layered material, realistic textures, soft extruded shapes, or translucent glass. Each is covered in depth as a full style in UI Visual Styles.',
         purpose: 'The surface treatment sets much of an interface\'s character and affects contrast and clarity.',
         types: ['Flat: solid color, no depth effects.', 'Material-inspired: flat surfaces with consistent elevation shadows.', 'Skeuomorphic: imitates real materials and objects.', 'Neumorphic: same-color surfaces with paired light/dark shadows.', 'Glass: translucent, blurred surfaces with light borders.'],
+        typeGroups: [
+            { title: 'A. Opaque surfaces', items: ['Flat', 'Material-inspired', 'Skeuomorphic'] },
+            { title: 'B. Light & transparency effects', items: ['Neumorphic', 'Glass'] },
+        ],
+        typeGuidance: {
+            'Flat': { use: ['Use for clear, low-noise interfaces where color and spacing should establish hierarchy.'], avoid: ['Avoid flattening every level when people need to distinguish overlays or nested surfaces.'] },
+            'Material-inspired': { use: ['Use when consistent surface levels and restrained elevation help explain layering.'], avoid: ['Avoid using shadows as the only cue that a control is interactive.'] },
+            'Skeuomorphic': { use: ['Use when a realistic material metaphor directly helps explain how an object behaves.'], avoid: ['Avoid decorative realism that obscures content or creates false expectations.'] },
+            'Neumorphic': { use: ['Use sparingly for low-risk decorative surfaces where boundaries remain clear.'], avoid: ['Avoid for primary controls or dense interfaces where its subtle edges are hard to see.'] },
+            'Glass': { use: ['Use for overlays on a known backdrop when separation and text contrast remain strong.'], avoid: ['Avoid over variable imagery or motion that makes the foreground difficult to read.'] },
+        },
         use: ['Pick one treatment per product and apply it consistently by elevation level.'],
         avoid: ['Avoid neumorphic controls for primary actions — low contrast boundaries.'],
         pros: ['Strong identity.'],

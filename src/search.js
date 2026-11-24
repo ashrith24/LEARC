@@ -2,8 +2,8 @@ import { topics, order, catById, categories, comparisons, glossary, paths } from
 import { href } from './router';
 const norm = (s) => s.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9+ ]+/g, ' ').trim();
 const docs = [
-    ...order.map(id => { const t = topics[id]; return { kind: 'Topic', title: t.title, aliases: t.aliases || [], tags: [...(t.tags || []), t.type, t.level], body: t.summary + ' ' + t.definition, sub: t.summary, meta: catById[t.category].num + ' · ' + catById[t.category].short, to: href.topic(id) }; }),
-    ...categories.map(c => ({ kind: 'Category', title: c.title, aliases: [c.short], tags: [c.domain], body: c.intro, sub: c.intro, meta: 'Subject ' + c.num, to: href.cat(c.id) })),
+    ...order.map(id => { const t = topics[id]; return { kind: 'Lesson', title: t.title, aliases: t.aliases || [], tags: [...(t.tags || []), t.type, t.level], body: t.summary + ' ' + t.definition, sub: t.summary, meta: catById[t.category].short, to: href.topic(id) }; }),
+    ...categories.map(c => ({ kind: 'Topic', title: c.title, aliases: [c.short], tags: [c.domain], body: c.intro, sub: c.intro, meta: 'Category · ' + c.domain, to: href.cat(c.id) })),
     ...comparisons.map(c => ({ kind: 'Comparison', title: c.title, aliases: [], tags: ['vs', 'difference', 'compare'], body: c.answer, sub: c.question, meta: 'Comparison', to: href.cmp(c.id) })),
     ...paths.map(p => ({ kind: 'Learning path', title: p.title, aliases: [], tags: ['path', 'learn', p.level], body: p.summary, sub: p.summary, meta: p.steps.length + ' steps', to: href.path(p.id) })),
     ...glossary.filter(g => !topics[g.topic || ''] || topics[g.topic].title !== g.term).map(g => ({ kind: 'Glossary', title: g.term, aliases: [], tags: [], body: g.def, sub: g.def, meta: 'Glossary', to: g.topic ? href.topic(g.topic) : href.glossary })),

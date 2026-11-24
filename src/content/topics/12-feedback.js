@@ -71,6 +71,18 @@ export const topics = [
         purpose: 'Focuses attention on a short task or decision without navigating away.',
         anatomy: ['Scrim/backdrop', 'Container', 'Title', 'Body content', 'Actions (primary + cancel)', 'Close button', 'Focus trap and return'],
         types: ['Modal dialog', 'Non-modal dialog', 'Confirmation dialog', 'Alert dialog', 'Form dialog', 'Full-screen dialog (mobile)'],
+        typeGroups: [
+            { title: 'A. Attention & decisions', items: ['Modal dialog', 'Non-modal dialog', 'Confirmation dialog', 'Alert dialog'] },
+            { title: 'B. Focused tasks', items: ['Form dialog', 'Full-screen dialog (mobile)'] },
+        ],
+        typeGuidance: {
+            'Modal dialog': { use: ['Use for a short task that must be completed before returning to the page.'], avoid: ['Avoid when people need to reference underlying content or complete a long workflow.'] },
+            'Non-modal dialog': { use: ['Use for supplementary tools that can remain open while the page stays usable.'], avoid: ['Avoid when the task requires exclusive attention or the dialog can be lost behind content.'] },
+            'Confirmation dialog': { use: ['Use before an irreversible action when a clear consequence needs confirmation.'], avoid: ['Avoid for routine actions that do not warrant interruption.'] },
+            'Alert dialog': { use: ['Use for urgent information that requires an immediate response.'], avoid: ['Avoid for ordinary status updates or low-priority messages.'] },
+            'Form dialog': { use: ['Use for a small, focused form that can be completed without much page context.'], avoid: ['Avoid for long forms or tasks that need reference material from the page.'] },
+            'Full-screen dialog (mobile)': { use: ['Use on a small screen when a focused task needs more room than a sheet can provide.'], avoid: ['Avoid making a brief confirmation feel like a full navigation change.'] },
+        },
         use: ['Short, focused tasks; confirming destructive actions.'],
         avoid: ['Avoid modals for long forms, for content people need to reference the page beneath, or opening modals from modals.'],
         pros: ['Strong focus.'],

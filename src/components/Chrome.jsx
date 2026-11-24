@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { categories, topics, topicsIn, DOMAINS, order, comparisons, paths } from '../content';
 import { href } from '../router';
 import { Icon } from './Icon';
+import brandMark from '../assets/brand-mark.png';
 const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
 export const modKey = isMac ? '⌘' : 'Ctrl';
 export function Header({ route, onSearch, onMenu, sidebar }) {
@@ -24,13 +25,14 @@ export function Header({ route, onSearch, onMenu, sidebar }) {
         { to: href.glossary, label: 'Glossary', cur: cur(['glossary']) },
         { to: href.paths, label: 'Learning Paths', cur: cur(['paths', 'path']) },
         { to: href.compare, label: 'Comparisons', cur: cur(['compare', 'cmp']) },
+        { to: href.trends, label: 'Design Trends', cur: cur(['trends']) },
     ];
     return (<>
       <header className="hdr">
         {sidebar && <button className="icon-btn hdr-mobile" onClick={onMenu} aria-label="Open topic index"><Icon n="list" s={20}/></button>}
-        <a className="brand" href={href.home} aria-label="Complete UI/UX Encyclopedia — home">
-          <span className="brand-mark" aria-hidden="true">Ui</span>
-          <span>Encyclopedia</span><small>Vol.1 · UI</small>
+        <a className="brand" href={href.home} aria-label="Learc — home">
+          <img className="brand-mark" src={brandMark} alt="" aria-hidden="true"/>
+          <span>Learc</span>
         </a>
         <nav className="gnav" aria-label="Primary">
           {links.map(l => <a key={l.to} href={l.to} aria-current={l.cur}>{l.label}{l.soon && <span className="soon">Soon</span>}</a>)}
@@ -97,17 +99,17 @@ export function Sidebar({ route, open, onClose }) {
         <div className="side-head"><span className="label">Topic index</span><button className="icon-btn" onClick={onClose} aria-label="Close topic index"><Icon n="x"/></button></div>
         <div className="side-search">
           <Icon n="search"/>
-          <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Filter 203 topics…" aria-label="Filter topics in the index"/>
+          <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search 203 topics…" aria-label="Search topics in the index"/>
         </div>
         <div className="side-tools">
-          <a href={href.ui} className="label" style={{ textDecoration: 'none' }}>All 19 subjects</a>
-          <span>
-            <button onClick={() => setExp(categories.map(c => c.id))}>Expand all</button>
-            <button onClick={() => setExp(curCat ? [curCat] : [])}>Collapse</button>
-          </span>
+          <a href={href.ui} className="side-tool-title">All 19 topics</a>
+          <div className="side-toggle" role="group" aria-label="Topic list controls">
+            <button type="button" aria-pressed={categories.every(c => exp.includes(c.id))} onClick={() => setExp(categories.map(c => c.id))}>Expand all</button>
+            <button type="button" aria-pressed={exp.length === 0} onClick={() => setExp([])}>Collapse</button>
+          </div>
         </div>
         {!anyHit && <p className="side-empty">No topics match “{q}”. Try the global search for glossary terms.</p>}
-        <nav aria-label="Subjects and topics">
+        <nav aria-label="Categories, topics, sections and lessons">
           {DOMAINS.map(d => {
             const cats = categories.filter(c => c.domain === d && (!ql || topicsIn(c.id).some(t => match(t.id))));
             if (!cats.length)
@@ -117,7 +119,7 @@ export function Sidebar({ route, open, onClose }) {
                 {cats.map(c => {
                     const isOpen = !!ql || exp.includes(c.id);
                     return (<div key={c.id}>
-                      <button className={'cat-btn' + (curCat === c.id ? ' current' : '')} aria-expanded={isOpen} aria-controls={'cl-' + c.id} onClick={() => toggle(c.id)}>
+                      <button className={'cat-btn' + (curCat === c.id ? ' current' : '')} aria-label={'Topic ' + c.title} aria-expanded={isOpen} aria-controls={'cl-' + c.id} onClick={() => toggle(c.id)}>
                         <span className="n">{c.num}</span><span>{c.short}</span><Icon n="chev" s={14} className="chev"/>
                       </button>
                       {isOpen && (<ul className="cat-list" id={'cl-' + c.id}>
@@ -127,9 +129,9 @@ export function Sidebar({ route, open, onClose }) {
                                 if (!ts.length)
                                     return null;
                                 return (<li key={g.title}>
-                                <div className="grp" aria-hidden="true">{g.title}</div>
-                                <ul style={{ listStyle: 'none', padding: 0 }} aria-label={g.title}>
-                                  {ts.map(id => <li key={id}><a href={href.topic(id)} aria-current={curTopic?.id === id ? 'page' : undefined} onClick={onClose}>{hl(topics[id].title, q.trim())}</a></li>)}
+                                <div className="grp"><Icon n="folder" s={13}/><span>{g.title}</span></div>
+                                <ul className="topic-list" aria-label={g.title}>
+                                  {ts.map(id => <li key={id}><a href={href.topic(id)} aria-label={'Lesson: ' + topics[id].title} aria-current={curTopic?.id === id ? 'page' : undefined} onClick={onClose}><span className="topic-dot" aria-hidden="true"/><span>{hl(topics[id].title, q.trim())}</span></a></li>)}
                                 </ul>
                               </li>);
                             })}
@@ -154,11 +156,10 @@ export function Footer() {
     return (<footer className="foot">
       <div className="foot-in">
         <div>
-          <a className="brand" href={href.home} style={{ marginBottom: 12 }}><span className="brand-mark" aria-hidden="true">Ui</span><span>Encyclopedia</span></a>
-          <p style={{ maxWidth: '40ch' }}>The Complete UI/UX Encyclopedia — V1: the static UI Encyclopedia. {order.length} entries across 19 subjects. The UX Encyclopedia is the final planned release.</p>
-          <p className="mono">Content reviewed 2026-11-24 · Examples cite official documentation and are dated.</p>
+          <a className="brand" href={href.home} style={{ marginBottom: 12 }}><img className="brand-mark" src={brandMark} alt="" aria-hidden="true"/><span>Learc</span></a>
+          <p style={{ maxWidth: '40ch' }}>Learc is a UI design reference with {order.length} lessons across 19 topics. The UX Encyclopedia is the final planned release.</p>
         </div>
-        <div><h3>Encyclopedia</h3><a href={href.ui}>All subjects</a><a href={href.cat('foundations')}>Foundations</a><a href={href.cat('elements')}>Elements</a><a href={href.cat('page-layouts')}>Page layouts</a></div>
+        <div><h3>Explore</h3><a href={href.ui}>All topics</a><a href={href.cat('foundations')}>Foundations</a><a href={href.cat('elements')}>Elements</a><a href={href.cat('page-layouts')}>Page layouts</a></div>
         <div><h3>Learn</h3><a href={href.paths}>Learning paths ({paths.length})</a><a href={href.compare}>Comparisons ({comparisons.length})</a><a href={href.glossary}>Glossary</a></div>
         <div><h3>Roadmap</h3><a href={href.ux}>UX Encyclopedia — later</a><span style={{ display: 'block', padding: '4px 0' }}>V2 Playground — planned</span><span style={{ display: 'block', padding: '4px 0' }}>V3 Design Studio — planned</span></div>
       </div>

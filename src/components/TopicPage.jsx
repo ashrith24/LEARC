@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { topics, catById, prevNext, sources, comparisons } from '../content';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { topics, catById, prevNext, comparisons } from '../content';
 import { href } from '../router';
 import { Icon } from './Icon';
 import { Crumbs } from './Chrome';
@@ -10,15 +10,6 @@ function DefList({ items, numbered }) {
     if (ps.every(p => !p[0]))
         return <ul className="deflist" style={{ paddingLeft: 0 }}>{ps.map((p, i) => <li key={i} style={{ gridTemplateColumns: '1fr' }}><span>{p[1]}</span></li>)}</ul>;
     return <ul className={'deflist' + (numbered ? ' numbered' : '')}>{ps.map(([a, b], i) => <li key={i}><b>{a || '—'}</b><span>{b}</span></li>)}</ul>;
-}
-export function SourceLink({ id, inline }) {
-    const s = sources[id];
-    if (!s)
-        return null;
-    const status = s.checked ? <span className="chip ok"><Icon n="check" s={12}/>Verified {s.checked}</span> : <span className="chip warn">Pending verification</span>;
-    if (inline)
-        return <span className="ex-src"><span className="chip">{s.kind}</span><a href={s.url} target="_blank" rel="noopener noreferrer">{s.title}<Icon n="ext" s={12} className="ext"/></a>{status}</span>;
-    return <li><span><a href={s.url} target="_blank" rel="noopener noreferrer">{s.title} ↗</a><span className="pub">{s.publisher} · {s.kind}</span></span>{status}</li>;
 }
 export function useScrollSpy(ids, dep) {
     const [active, setActive] = useState(ids[0]);
@@ -46,7 +37,7 @@ export function jumpTo(id) {
         return;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-    const h = el.querySelector('h2');
+    const h = el.querySelector('h2, h3, h4');
     if (h) {
         h.setAttribute('tabindex', '-1');
         h.focus({ preventScroll: true });
@@ -64,7 +55,10 @@ export function Toc({ secs, active, extra }) {
     return (<aside className="toc" aria-label="On this page">
       <div className="label">On this page</div>
       <div className="toc-meter" aria-hidden="true"><i ref={meter}/></div>
-      <ol>{secs.map((s, i) => <li key={s.id}><a href={'#' + s.id} data-native className={active === s.id ? 'on' : ''} aria-current={active === s.id ? 'location' : undefined} onClick={e => { e.preventDefault(); jumpTo(s.id); }}><span>{String(i + 1).padStart(2, '0')}</span>{s.label}</a></li>)}</ol>
+      <ol>{secs.map(s => <li key={s.id}>
+        <a href={'#' + s.id} data-native className={active === s.id || s.children?.some(c => c.id === active) ? 'on' : ''} aria-current={active === s.id || s.children?.some(c => c.id === active) ? 'location' : undefined} onClick={e => { e.preventDefault(); jumpTo(s.id); }}><span>{s.number || String(secs.indexOf(s) + 1).padStart(2, '0')}</span>{s.label}</a>
+        {s.children?.length ? <details className="toc-subgroup"><summary aria-label={`Show ${s.children.length} ${s.label.toLowerCase()} subsections`}><Icon n="chev" s={13}/></summary><ol>{s.children.map(c => <li key={c.id}><a href={'#' + c.id} data-native className={active === c.id ? 'on' : ''} aria-current={active === c.id ? 'location' : undefined} onClick={e => { e.preventDefault(); jumpTo(c.id); }}><span>{c.number}</span>{c.label}</a></li>)}</ol></details> : null}
+      </li>)}</ol>
       {extra}
     </aside>);
 }
@@ -72,14 +66,48 @@ export function MobileToc({ secs }) {
     const d = useRef(null);
     return (<details className="toc-mobile" ref={d}>
       <summary>On this page <Icon n="chevD"/></summary>
-      <ol>{secs.map(s => <li key={s.id}><a href={'#' + s.id} data-native onClick={e => { e.preventDefault(); d.current.open = false; jumpTo(s.id); }}>{s.label}</a></li>)}</ol>
+      <ol>{secs.map(s => <li key={s.id}><a href={'#' + s.id} data-native onClick={e => { e.preventDefault(); d.current.open = false; jumpTo(s.id); }}><span>{s.number || String(secs.indexOf(s) + 1).padStart(2, '0')}</span> {s.label}</a>{s.children?.length ? <details className="toc-mobile-sub"><summary aria-label={`Show ${s.children.length} ${s.label.toLowerCase()} subsections`}><Icon n="chev" s={13}/></summary><ol>{s.children.map(c => <li key={c.id}><a href={'#' + c.id} data-native onClick={e => { e.preventDefault(); d.current.open = false; jumpTo(c.id); }}><span>{c.number}</span> {c.label}</a></li>)}</ol></details> : null}</li>)}</ol>
     </details>);
 }
 function Section({ s, i }) {
     return (<section className="sec" id={s.id} aria-labelledby={s.id + '-h'}>
-      <div className="sec-h"><span className="idx" aria-hidden="true">§ {String(i + 1).padStart(2, '0')}</span><h2 id={s.id + '-h'}>{s.label}</h2></div>
+      <div className="sec-h"><span className="idx" aria-hidden="true">{s.number}</span><h2 id={s.id + '-h'}>{s.label}</h2></div>
       {s.node}
     </section>);
+}
+function TypeList({ items, groups, guidance, examples, number }) {
+    const entries = items.map((item, i) => {
+        const [label, description] = pair(item);
+        const detail = guidance?.[label] || {};
+        return { id: `s-type-${i + 1}`, number: `${number}.${i + 1}`, label: label || description, description: label ? description : '', detail, examples: examples?.[label] || [], index: i };
+    });
+    const groupByLabel = new Map();
+    (groups || []).forEach(group => group.items.forEach(label => groupByLabel.set(label, group.title)));
+    let previousGroup = null;
+    return <div className="type-list">{entries.map(entry => {
+        const group = groupByLabel.get(entry.label);
+        const showGroup = group && group !== previousGroup;
+        previousGroup = group || null;
+        const TypeHeading = group ? 'h4' : 'h3';
+        const GuidanceHeading = group ? 'h5' : 'h4';
+        return <Fragment key={entry.id}>
+          {showGroup && <h3 className="type-group">{group}</h3>}
+          <article className="type-entry" id={entry.id} aria-labelledby={entry.id + '-h'}>
+            <div className="type-entry-head"><span>{entry.number}</span><TypeHeading id={entry.id + '-h'}>{entry.label}</TypeHeading></div>
+            {entry.description && <p>{entry.description}</p>}
+            {(entry.detail.use?.length || entry.detail.avoid?.length) ? <div className="type-guidance">
+              {entry.detail.use?.length ? <div><GuidanceHeading>When to use</GuidanceHeading><ul>{entry.detail.use.map((x, i) => <li key={i}>{x}</li>)}</ul></div> : null}
+              {entry.detail.avoid?.length ? <div><GuidanceHeading>When to avoid</GuidanceHeading><ul>{entry.detail.avoid.map((x, i) => <li key={i}>{x}</li>)}</ul></div> : null}
+            </div> : null}
+            {entry.examples.length ? <div className="type-examples"><h4>Real-world examples</h4><div className="type-example-grid">{entry.examples.map((sample, i) => <div className="type-example" key={i}>
+              <div className={'type-shot type-shot-' + sample.kind} style={{ '--sample-tone': sample.tone || '#3B82F6' }} aria-hidden="true">
+                {sample.kind === 'logo' ? <div className="type-logo"><b>{sample.glyph}</b></div> : <div className="type-mini-ui"><span className="type-mini-bar"><i/><i/><i/></span><span className="type-mini-copy"/><span className="type-mini-copy short"/>{sample.kind === 'button' ? <b>{sample.action || 'Continue'}</b> : <span className="type-mini-control"/>}</div>}
+              </div>
+              <b>{sample.product}</b><span>{sample.context}</span>
+            </div>)}</div></div> : null}
+          </article>
+        </Fragment>;
+    })}</div>;
 }
 export function TopicPage({ id }) {
     const t = topics[id];
@@ -97,7 +125,7 @@ export function TopicPage({ id }) {
         if (t.anatomy?.length)
             s.push({ id: 's-anatomy', label: isPage ? 'Page anatomy' : isStyle ? 'Visual traits' : 'Anatomy', node: <DefList items={t.anatomy} numbered/> });
         if (t.types?.length)
-            s.push({ id: 's-types', label: isPage ? 'Section order & layout alternatives' : 'Types & variants', node: t.types.map(pair).every(p => p[0]) ? <div className="types-grid">{t.types.map(pair).map(([a, b], i) => <div key={i}><b>{a}</b><span>{b}</span></div>)}</div> : <DefList items={t.types}/> });
+            s.push({ id: 's-types', label: isPage ? 'Section order & layout alternatives' : 'Types & variants', typeItems: t.types, node: null });
         if (t.states?.length)
             s.push({ id: 's-states', label: 'States & behaviour', node: <DefList items={t.states}/> });
         if (t.use?.length || t.avoid?.length)
@@ -124,47 +152,63 @@ export function TopicPage({ id }) {
         {t.examples?.length ? t.examples.map((e, i) => (<article className="ex" key={i}>
             <div className="ex-top"><b>{e.product}</b><span className="ex-ctx">{e.context}</span></div>
             <p>{e.observed}</p>
-            <SourceLink id={e.source} inline/>
-          </article>)) : <div className="pending"><b>Awaiting verification.</b> No product example for this entry has been verified against an official source yet, so none is shown. Examples are added only with an exact interface context, a source link and a check date.</div>}
+          </article>)) : <div className="pending">No product examples are available for this entry yet.</div>}
       </div>) });
-        if (t.refs?.length)
-            s.push({ id: 's-refs', label: 'Sources & references', node: <ul className="refs">{t.refs.map(r => <SourceLink key={r} id={r}/>)}</ul> });
         const rel = [...(t.prereq || []).map(r => ['Prerequisite', r]), ...(t.related || []).map(r => ['Related', r])].filter(([, r]) => topics[r]);
         if (rel.length)
             s.push({ id: 's-related', label: 'Related topics', node: <div className="rel">{rel.map(([k, r]) => <a key={k + r} href={href.topic(r)}><span className="label">{k} · {catById[topics[r].category].short}</span><b>{topics[r].title}</b></a>)}</div> });
         if (t.takeaways?.length)
             s.push({ id: 's-check', label: 'Learning check', node: (<div><ol className="takeaways">{t.takeaways.map((k, i) => <li key={i}>{k}</li>)}</ol>
         <p className="muted" style={{ marginTop: 14, fontSize: 15 }}><b style={{ color: 'var(--tx-1)' }}>Observation task:</b> find {t.title.toLowerCase().startsWith('the') ? '' : 'an example of '}“{t.title}” in a product you use today. Describe it using the vocabulary on this page{t.anatomy?.length ? ' — name its parts' : ''}{t.use?.length ? ' and judge whether it fits the “use when” guidance' : ''}.</p></div>) });
+        const usageSection = s.find(section => section.id === 's-usage');
+        if (usageSection && !isPage && t.types?.length)
+            usageSection.label = 'Usage principles';
+        s.forEach((section, i) => { section.number = String(i + 1).padStart(2, '0'); });
+        const typeSection = s.find(section => section.typeItems);
+        if (typeSection) {
+            const typeGroupByLabel = new Map();
+            (t.typeGroups || []).forEach(group => group.items.forEach(label => typeGroupByLabel.set(label, group.title)));
+            let previousGroup = null;
+            const subSectionNumber = String(Number(typeSection.number));
+            typeSection.children = typeSection.typeItems.map((item, i) => {
+                const [label, description] = pair(item);
+                const name = label || description;
+                const group = typeGroupByLabel.get(name);
+                const groupStart = !!group && group !== previousGroup;
+                previousGroup = group || null;
+                return { id: `s-type-${i + 1}`, number: `${subSectionNumber}.${i + 1}`, label: name, group, groupStart };
+            });
+            typeSection.node = <TypeList items={typeSection.typeItems} groups={t.typeGroups} guidance={t.typeGuidance} examples={t.typeExamples} number={subSectionNumber}/>;
+        }
         return s;
     }, [id]);
-    const active = useScrollSpy(secs.map(s => s.id), id);
-    useEffect(() => { document.title = `${t.title} — UI Encyclopedia`; }, [id]);
+    const sectionIds = secs.flatMap(s => [s.id, ...(s.children || []).map(c => c.id)]);
+    const active = useScrollSpy(sectionIds, id);
+    useEffect(() => { document.title = `Learc — ${t.title}`; }, [id]);
     return (<div className="doc">
       <article className="doc-body">
-        <Crumbs items={[['Home', href.home], ['UI Encyclopedia', href.ui], [c.num + ' ' + c.short, href.cat(c.id)], [t.group], [t.title]]}/>
         <header className="t-head">
-          <div className="t-kicker"><span className="num">{c.num}.{String(t.index - (Object.values(topics).filter(x => x.category === c.id)[0].index) + 1).padStart(2, '0')}</span><span className="label">{c.short} / {t.group}</span></div>
+          <Crumbs items={[['Home', href.home], ['UI Encyclopedia', href.ui], [c.domain], [c.short, href.cat(c.id)], [t.group], [t.title]]}/>
+          <div className="t-kicker"><span className="num">{c.num}.{String(t.index - (Object.values(topics).filter(x => x.category === c.id)[0].index) + 1).padStart(2, '0')}</span><span className="label">{c.domain} / {c.short} / {t.group}</span></div>
           <h1>{t.title}</h1>
           <p className="t-sum">{t.summary}</p>
           <div className="t-meta">
             <span className="chip blue">{t.type}</span>
             <span className="chip"><span className="dot" style={{ color: t.level === 'Beginner' ? 'var(--ok)' : t.level === 'Intermediate' ? 'var(--warn)' : 'var(--err)' }}/>{t.level}</span>
             <span className="chip">{t.readMins} min read</span>
-            <span className={'chip ' + (t.verification === 'Verified examples' ? 'ok' : 'warn')}>{t.verification}</span>
-            <span className="chip">Reviewed {t.lastReviewed}</span>
           </div>
           {t.aliases?.length ? <p className="aka"><b>Also called / covers:</b> {t.aliases.join(' · ')}</p> : null}
           <MobileToc secs={secs}/>
         </header>
         {secs.map((s, i) => <Section key={s.id} s={s} i={i}/>)}
         <nav className="pn" aria-label="Previous and next topic">
-          {prev ? <a href={href.topic(prev.id)}><span className="label">← Previous · {catById[prev.category].short}</span><b>{prev.title}</b></a> : <span />}
-          {next ? <a className="next" href={href.topic(next.id)}><span className="label">Next · {catById[next.category].short} →</span><b>{next.title}</b></a> : <span />}
+          {prev ? <a href={href.topic(prev.id)}><Icon n="arrowL" s={14}/>Previous</a> : <span />}
+          {next ? <a className="next" href={href.topic(next.id)}>Next<Icon n="arrow" s={14}/></a> : <span />}
         </nav>
       </article>
       <Toc secs={secs} active={active} extra={<div className="toc-card">
           <div className="label">Learning tip</div>
-          {t.prereq?.length ? <><p>Read these first if anything here is unfamiliar:</p>{t.prereq.map(p => <a key={p} href={href.topic(p)}>{topics[p].title}</a>)}</> : <p>Open the demonstration, then come back to the anatomy and name each part you can see.</p>}
+          {t.prereq?.length ? <><p>Read these first if anything here is unfamiliar:</p>{t.prereq.map(p => <a key={p} href={href.topic(p)}>{topics[p].title}</a>)}</> : <p>{t.takeaways?.[0] || (Demo ? 'Explore the demonstration and compare its variations.' : `As you read, connect each idea to a real ${t.type.toLowerCase()} you have seen in a product.`)}</p>}
           {next && <><p style={{ marginTop: 10 }}>Up next:</p><a href={href.topic(next.id)}>{next.title} →</a></>}
         </div>}/>
     </div>);

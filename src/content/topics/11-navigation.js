@@ -131,6 +131,17 @@ export const topics = [
         definition: 'Tabs organise content into panels shown one at a time; selecting a tab shows its panel.',
         purpose: 'Group parallel content without leaving the page.',
         types: ['Line (underline) tabs', 'Contained / pill tabs', 'Scrollable tabs', 'Vertical tabs', 'Tabs with counts or icons'],
+        typeGroups: [
+            { title: 'A. Tab layouts', items: ['Line (underline) tabs', 'Contained / pill tabs', 'Scrollable tabs', 'Vertical tabs'] },
+            { title: 'B. Supporting indicators', items: ['Tabs with counts or icons'] },
+        ],
+        typeGuidance: {
+            'Line (underline) tabs': { use: ['Use for a small set of peer panels within one page or section.'], avoid: ['Avoid for sequential steps or links to separate pages.'] },
+            'Contained / pill tabs': { use: ['Use when a stronger selected state helps distinguish a compact set of local panels.'], avoid: ['Avoid when the pill styling makes tabs look like independent filters or buttons.'] },
+            'Scrollable tabs': { use: ['Use when a larger peer set must stay in one tab row on narrow screens.'], avoid: ['Avoid hiding the only indication that more tabs exist offscreen.'] },
+            'Vertical tabs': { use: ['Use for a larger set of related sections when a side-by-side label and panel layout fits.'], avoid: ['Avoid on narrow screens where the tab rail leaves too little space for the panel.'] },
+            'Tabs with counts or icons': { use: ['Use a count or icon when it adds useful context to a tab label.'], avoid: ['Avoid decorative icons or counts that do not help distinguish the panels.'] },
+        },
         states: ['Selected', 'Unselected', 'Hover', 'Focus', 'Disabled'],
         use: ['Parallel, peer content where people need one at a time.'],
         avoid: ['Avoid tabs for sequential steps (use a stepper) or when people must compare panels.'],

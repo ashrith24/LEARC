@@ -5,7 +5,7 @@ import { Header, Sidebar, Footer } from './components/Chrome';
 import { SearchPalette } from './components/SearchPalette';
 import { TopicPage } from './components/TopicPage';
 import { Home } from './components/Home';
-import { UIIndex, CategoryPage, CompareIndex, ComparePage, Glossary, PathsIndex, PathPage, UXPage, NotFound } from './components/Pages';
+import { UIIndex, CategoryPage, CompareIndex, ComparePage, DesignTrends, Glossary, PathsIndex, PathPage, UXPage, NotFound } from './components/Pages';
 export function App() {
     const route = useRoute();
     const [pal, setPal] = useState({ open: false, q: '' });
@@ -51,6 +51,9 @@ export function App() {
             break;
         case 'cmp':
             page = <ComparePage id={valid.id}/>;
+            break;
+        case 'trends':
+            page = <DesignTrends />;
             break;
         case 'glossary':
             page = <Glossary />;

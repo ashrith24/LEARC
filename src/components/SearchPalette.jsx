@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { search, suggestions } from '../search';
 import { go } from '../router';
 import { Icon } from './Icon';
-const kindIcon = { Topic: 'book', Category: 'layers', Comparison: 'compare', Glossary: 'glossary', 'Learning path': 'path' };
+const kindIcon = { Lesson: 'book', Topic: 'layers', Category: 'layers', Comparison: 'compare', Glossary: 'glossary', 'Learning path': 'path' };
 export function SearchPalette({ open, onClose, initial = '' }) {
     const [q, setQ] = useState(initial);
     const [i, setI] = useState(0);

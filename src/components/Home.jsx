@@ -1,24 +1,20 @@
 import { useEffect } from 'react';
-import { categories, topics, topicsIn, order, comparisons, paths, glossary } from '../content';
+import { categories, topics, topicsIn, comparisons, paths, glossary } from '../content';
 import { href, go } from '../router';
 import { Icon } from './Icon';
 import { useReveal, modKey } from './Chrome';
 import { suggestions } from '../search';
 const featured = ['visual-hierarchy', 'color-tokens', 'buttons', 'modals-dialogs', 'grid-systems', 'glassmorphism'];
-const recentlyUpdated = ['wcag-basics', 'touch-targets', 'design-tokens', 'select-menus', 'tables-data-grids', 'system-states', 'hero-sections', 'rail-bottom-nav'];
 export function Home({ onSearch }) {
-    useEffect(() => { document.title = 'The Complete UI/UX Encyclopedia — Volume 1: UI'; }, []);
+    useEffect(() => { document.title = 'Learc — UI Design Reference'; }, []);
     useReveal('home');
     return (<div className="home">
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-grid" aria-hidden="true"/>
         <div className="hero-glow" aria-hidden="true"/>
         <div className="horizon" aria-hidden="true"/>
-        <div className="hero-meta" aria-hidden="true">
-          <span>Vol. <b>01</b> — User Interface</span><span><b>19</b> subjects · <b>{order.length}</b> entries</span><span><b>{comparisons.length}</b> comparisons · <b>{glossary.length}</b> terms</span><span>Edition <b>2026.11</b></span>
-        </div>
         <div className="hero-body">
-          <span className="hero-index"><b>§ 01</b> An encyclopedia of interface design</span>
+          <span className="hero-index"><b>§ 01</b> A reference for interface design</span>
           <span className="annot a1">fig. 01 — the anatomy of an interface</span>
                     <h1 className="hero-title" id="hero-title">
             <span className="l l1">Every</span>
@@ -33,13 +29,10 @@ export function Home({ onSearch }) {
             </div>
           </div>
         </div>
-        <nav className="hero-foot" aria-label="Domains">
-          {[['Foundations', 'foundations', '01–07'], ['Elements & Components', 'elements', '08–12'], ['Patterns & Pages', 'landing', '13–15'], ['Styles & Systems', 'styles', '16–19']].map(([n, c, r]) => <a key={c} href={href.cat(c)}><span className="n">{r}</span><b>{n}</b></a>)}
-        </nav>
       </section>
 
       <section className="hsec" aria-labelledby="h-search">
-        <div className="hsec-head reveal"><span className="sn">§ 02 — Find</span><h2 id="h-search">Search by name, alias or problem.</h2><p>Search covers titles, alternative names (“CTA”, “dark mode”, “toast”), tags and definitions — plus comparisons, learning paths and the glossary.</p></div>
+        <div className="hsec-head reveal"><span className="sn">02 — Find</span><h2 id="h-search">Search by name, alias or problem.</h2><p>Search covers titles, alternative names (“CTA”, “dark mode”, “toast”), tags and definitions — plus comparisons, learning paths and the glossary.</p></div>
         <div className="search-hero reveal">
           <button className="big" onClick={() => onSearch()}><Icon n="search" s={20}/><span>What are you trying to understand?</span><kbd>{modKey} K</kbd></button>
           <div className="sugg">{suggestions.slice(0, 7).map(s => <button key={s} className="chip" onClick={() => onSearch(s)}>{s}</button>)}</div>
@@ -47,14 +40,14 @@ export function Home({ onSearch }) {
       </section>
 
       <section className="hsec" aria-labelledby="h-subjects">
-        <div className="hsec-head reveal"><span className="sn">§ 03 — Index</span><h2 id="h-subjects">Nineteen subjects, one hierarchy.</h2><p>Domain → subject → topic → type → variant. Foundations first, then elements, patterns, pages, styles and systems.</p></div>
-        <ol className="subjects reveal">
-          {categories.map(c => <li key={c.id}><a href={href.cat(c.id)}><span className="n" aria-hidden="true">{c.num}</span><b>{c.title}</b><span className="d">{c.intro.split('.')[0]}.</span><span className="c">{topicsIn(c.id).length} entries</span></a></li>)}
+        <div className="hsec-head reveal"><span className="sn">03 — Index</span><h2 id="h-subjects">Four categories. Nineteen topics.</h2><p>Category → topic → section → lesson. Start with a broad area, then move into its topics, sections and focused lessons.</p></div>
+        <ol className="subjects reveal" aria-label="Topics organized by category">
+          {categories.map(c => <li key={c.id}><a href={href.cat(c.id)}><span className="n" aria-hidden="true">{c.num}</span><b>{c.title}</b><span className="d">{c.intro.split('.')[0]}.</span><span className="c">{topicsIn(c.id).length} lessons</span></a></li>)}
         </ol>
       </section>
 
       <section className="hsec" aria-labelledby="h-learn">
-        <div className="hsec-head reveal"><span className="sn">§ 04 — Learn</span><h2 id="h-learn">Routes, comparisons, featured concepts.</h2><p>Follow a path from foundations to complete pages, or settle a specific question with a side-by-side comparison.</p></div>
+        <div className="hsec-head reveal"><span className="sn">04 — Learn</span><h2 id="h-learn">Routes, comparisons, featured concepts.</h2><p>Follow a path from foundations to complete pages, or settle a specific question with a side-by-side comparison.</p></div>
         <div className="home-split reveal">
           <a className="fcard" href={href.path('beginner')}>
             <span className="vis" aria-hidden="true"><svg viewBox="0 0 240 110" width="100%" height="100%"><path d="M20 90 C70 90 70 30 120 30 S170 70 220 20" fill="none" stroke="#2BA6FF" strokeWidth="2"/>{[20, 70, 120, 170, 220].map((x, i) => <circle key={x} cx={x} cy={[90, 64, 30, 52, 20][i]} r="6" fill={i < 2 ? '#2BA6FF' : '#1E2430'} stroke="#2BA6FF"/>)}</svg></span>
@@ -77,11 +70,6 @@ export function Home({ onSearch }) {
             </a>);
         })}
         </div>
-      </section>
-
-      <section className="hsec" aria-labelledby="h-recent">
-        <div className="hsec-head reveal"><span className="sn">§ 05 — Updated</span><h2 id="h-recent">Recently reviewed.</h2><p>Every entry carries a review date; real-world examples carry the date their source was checked.</p></div>
-        <ul className="recent reveal">{recentlyUpdated.map(id => <li key={id}><a href={href.topic(id)}><b>{topics[id].title}</b><small>{topics[id].lastReviewed}</small></a></li>)}</ul>
       </section>
 
       <section className="hsec" aria-labelledby="h-ux">

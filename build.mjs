@@ -5,6 +5,7 @@ const prod = !process.argv.includes('--dev');
 const r = await build({
   entryPoints: ['src/main.jsx'], bundle: true, write: false, minify: prod, format: 'iife',
   jsx: 'automatic', target: 'es2020',
+  loader: { '.png': 'dataurl' },
   define: { 'process.env.NODE_ENV': prod ? '"production"' : '"development"' }, logLevel: 'warning',
 });
 const js = r.outputFiles[0].text.replace(/<\/script/gi, '<\\/script');

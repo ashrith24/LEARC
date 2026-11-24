@@ -5,7 +5,7 @@ export function parse(hash) {
     const h = decodeURIComponent(hash.replace(/^#/, ''));
     if (!h || h === 'home')
         return { name: 'home' };
-    if (h === 'ui' || h === 'glossary' || h === 'compare' || h === 'paths' || h === 'ux')
+    if (h === 'ui' || h === 'glossary' || h === 'compare' || h === 'trends' || h === 'paths' || h === 'ux')
         return { name: h };
     const m = h.match(/^(c|t|cmp|path)-(.+)$/);
     if (m)
@@ -13,7 +13,7 @@ export function parse(hash) {
     return { name: 'notfound', hash: h };
 }
 export const href = {
-    home: '#home', ui: '#ui', glossary: '#glossary', compare: '#compare', paths: '#paths', ux: '#ux',
+    home: '#home', ui: '#ui', glossary: '#glossary', compare: '#compare', trends: '#trends', paths: '#paths', ux: '#ux',
     cat: (id) => '#c-' + id, topic: (id) => '#t-' + id, cmp: (id) => '#cmp-' + id, path: (id) => '#path-' + id,
 };
 const positions = new Map();
