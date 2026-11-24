@@ -75,39 +75,71 @@ function Section({ s, i }) {
       {s.node}
     </section>);
 }
-function TypeList({ items, groups, guidance, examples, number }) {
+function TypeList({ items, groups, guidance, examples, number, developerNotes = false }) {
+    const implementationByType = {
+        Primary: 'Use <button type="submit"> for form submission or type="button" for other actions. Keep one primary action per task and provide :focus-visible styling.',
+        Secondary: 'Use a native button with the same action semantics as the primary control. Change visual emphasis in CSS rather than changing its behavior.',
+        Tertiary: 'Use <button> for in-place actions; use <a href> when the control navigates. Keep the visible label and accessible name aligned.',
+        Outline: 'Use a native button with a transparent background and solid border. Define hover, active, disabled and :focus-visible states explicitly.',
+        Ghost: 'Use a native button with transparent resting styles. Add a clear hover/pressed surface without shrinking its hit target.',
+        'Text / link-style button': 'Use <button> for actions and <a href> for navigation even when their visual styles are similar. Preserve keyboard and context-menu behavior.',
+        Destructive: 'Use a button with explicit action wording. For consequential deletion, add a confirmation flow and never communicate danger by color alone.',
+        'Icon button': 'Use <button aria-label="…"> when the icon has no visible text. Include a visible focus ring and a practical hit area.',
+        'Split button': 'Build the main action and menu trigger as separate buttons. Give the menu trigger its own accessible name and aria-expanded state.',
+        'Floating action button (FAB)': 'Use a semantic button and account for safe-area insets, keyboard focus, and overlap with scrolling content.',
+        'Toggle button': 'Expose its state with aria-pressed="true|false" and update that state when activated; do not use aria-pressed for navigation.',
+        'Button group': 'Group related controls semantically. For mutually exclusive options, consider radio inputs or a tab pattern with the matching keyboard behavior.',
+        'Loading button': 'Set aria-busy while pending, prevent duplicate submission, and announce progress without hiding the action context.',
+        'Disabled button': 'Use the disabled attribute when unavailable. If users need to discover why, keep an explanation nearby or use a guarded action pattern.',
+        'Full-width (block) button': 'Use width: 100% within the intended form column and preserve a comfortable minimum height and visible focus state.',
+    };
     const entries = items.map((item, i) => {
         const [label, description] = pair(item);
         const detail = guidance?.[label] || {};
-        return { id: `s-type-${i + 1}`, number: `${number}.${i + 1}`, label: label || description, description: label ? description : '', detail, examples: examples?.[label] || [], index: i };
+        return { id: `s-type-${i + 1}`, number: `${number}.${i + 1}`, label: label || description, description: label ? description : '', detail: { ...detail, implementation: detail.implementation || (developerNotes ? implementationByType[label] : undefined) }, examples: examples?.[label] || [], index: i };
     });
     const groupByLabel = new Map();
     (groups || []).forEach(group => group.items.forEach(label => groupByLabel.set(label, group.title)));
-    let previousGroup = null;
-    return <div className="type-list">{entries.map(entry => {
+    const grouped = new Map();
+    const ungrouped = [];
+    entries.forEach(entry => {
         const group = groupByLabel.get(entry.label);
-        const showGroup = group && group !== previousGroup;
-        previousGroup = group || null;
-        const TypeHeading = group ? 'h4' : 'h3';
-        const GuidanceHeading = group ? 'h5' : 'h4';
+        if (!group) { ungrouped.push(entry); return; }
+        if (!grouped.has(group)) grouped.set(group, []);
+        grouped.get(group).push(entry);
+    });
+    const renderEntry = entry => {
+        const TypeHeading = 'h3';
+        const GuidanceHeading = 'h4';
         return <Fragment key={entry.id}>
-          {showGroup && <h3 className="type-group">{group}</h3>}
           <article className="type-entry" id={entry.id} aria-labelledby={entry.id + '-h'}>
             <div className="type-entry-head"><span>{entry.number}</span><TypeHeading id={entry.id + '-h'}>{entry.label}</TypeHeading></div>
             {entry.description && <p>{entry.description}</p>}
             {(entry.detail.use?.length || entry.detail.avoid?.length) ? <div className="type-guidance">
-              {entry.detail.use?.length ? <div><GuidanceHeading>When to use</GuidanceHeading><ul>{entry.detail.use.map((x, i) => <li key={i}>{x}</li>)}</ul></div> : null}
-              {entry.detail.avoid?.length ? <div><GuidanceHeading>When to avoid</GuidanceHeading><ul>{entry.detail.avoid.map((x, i) => <li key={i}>{x}</li>)}</ul></div> : null}
+              {entry.detail.use?.length ? <div className="panel do type-guidance-card"><GuidanceHeading><Icon n="check" s={14}/>When to use</GuidanceHeading><ul>{entry.detail.use.map((x, i) => <li key={i}>{x}</li>)}</ul></div> : null}
+              {entry.detail.avoid?.length ? <div className="panel dont type-guidance-card"><GuidanceHeading><Icon n="x" s={14}/>When to avoid</GuidanceHeading><ul>{entry.detail.avoid.map((x, i) => <li key={i}>{x}</li>)}</ul></div> : null}
             </div> : null}
-            {entry.examples.length ? <div className="type-examples"><h4>Real-world examples</h4><div className="type-example-grid">{entry.examples.map((sample, i) => <div className="type-example" key={i}>
-              <div className={'type-shot type-shot-' + sample.kind} style={{ '--sample-tone': sample.tone || '#3B82F6' }} aria-hidden="true">
-                {sample.kind === 'logo' ? <div className="type-logo"><b>{sample.glyph}</b></div> : <div className="type-mini-ui"><span className="type-mini-bar"><i/><i/><i/></span><span className="type-mini-copy"/><span className="type-mini-copy short"/>{sample.kind === 'button' ? <b>{sample.action || 'Continue'}</b> : <span className="type-mini-control"/>}</div>}
-              </div>
+            {entry.detail.implementation ? <div className="type-dev-note"><b>Developer implementation</b><p>{entry.detail.implementation}</p></div> : null}
+            {entry.examples.length ? <div className="type-examples"><h4>Real-world examples</h4><div className="type-example-grid">{entry.examples.map((sample, i) => <article className={'type-example type-example-' + entry.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')} key={i}>
               <b>{sample.product}</b><span>{sample.context}</span>
-            </div>)}</div></div> : null}
+              <div className={'type-shot type-shot-' + sample.kind} style={{ '--sample-tone': sample.tone || '#3B82F6' }} aria-hidden="true">
+                {sample.kind === 'logo' ? <div className="type-logo"><b>{sample.glyph}</b></div> : sample.kind === 'button' ? <div className="type-mini-ui"><b>{sample.action || 'Continue'}</b></div> : <div className="type-mini-ui"><span className="type-mini-control"/></div>}
+              </div>
+            </article>)}</div></div> : null}
           </article>
         </Fragment>;
-    })}</div>;
+    };
+    const groupNames = [...grouped.keys()];
+    return <div className="type-list">
+      {groupNames.map(name => <details className="type-category" key={name}>
+        <summary><span>{name}</span><span className="type-category-meta">{grouped.get(name).length} types <Icon n="chev" s={15}/></span></summary>
+        <div className="type-category-content">{grouped.get(name).map(renderEntry)}</div>
+      </details>)}
+      {ungrouped.length ? <details className="type-category">
+        <summary><span>{groupNames.length ? 'Other variants' : 'Types & variants'}</span><span className="type-category-meta">{ungrouped.length} types <Icon n="chev" s={15}/></span></summary>
+        <div className="type-category-content">{ungrouped.map(renderEntry)}</div>
+      </details> : null}
+    </div>;
 }
 export function TopicPage({ id }) {
     const t = topics[id];
@@ -178,7 +210,7 @@ export function TopicPage({ id }) {
                 previousGroup = group || null;
                 return { id: `s-type-${i + 1}`, number: `${subSectionNumber}.${i + 1}`, label: name, group, groupStart };
             });
-            typeSection.node = <TypeList items={typeSection.typeItems} groups={t.typeGroups} guidance={t.typeGuidance} examples={t.typeExamples} number={subSectionNumber}/>;
+            typeSection.node = <TypeList items={typeSection.typeItems} groups={t.typeGroups} guidance={t.typeGuidance} examples={t.typeExamples} number={subSectionNumber} developerNotes={t.id === 'buttons'}/>;
         }
         return s;
     }, [id]);
