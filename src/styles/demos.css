@@ -202,11 +202,14 @@ textarea.ui-in { height: auto; padding: 10px 12px; resize: vertical; line-height
 .dv { display: grid; gap: 8px; } .dv > div { display: grid; grid-template-columns: 110px 1fr; gap: 10px; align-items: center; }
 .dv > div > div { display: grid; grid-template-columns: repeat(6, 1fr); height: 26px; border-radius: 6px; overflow: hidden; }
 .ramp { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
-.ramp div { padding: 10px 6px; min-height: 76px; display: grid; align-content: space-between; } .ramp b { font-size: 12px; } .ramp code { font-size: 9.5px; opacity: .85; word-break: break-all; }
+.ramp button { min-width: 0; padding: 10px 6px; min-height: 76px; display: grid; align-content: space-between; border: 0; border-radius: 0; text-align: left; cursor: pointer; }
+.ramp button[aria-pressed="true"] { position: relative; z-index: 1; box-shadow: inset 0 0 0 3px var(--bg-1), inset 0 0 0 5px var(--blue-soft); }
+.ramp button:focus-visible { position: relative; z-index: 2; outline: 3px solid var(--blue-soft); outline-offset: -3px; }
+.ramp b { font-size: 12px; } .ramp code { font-size: 9.5px; opacity: .85; word-break: break-all; }
 @media (max-width: 640px) { .ramp { grid-template-columns: repeat(5, 1fr); } }
 .themebox { padding: 18px; border-radius: 14px; transition: background var(--dur-3); }
 .themebox > div { display: grid; gap: 6px; padding: 16px; border-radius: 12px; max-width: 420px; }
-.tb-btn { justify-self: start; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 14px; margin: 4px 0; }
+.tb-btn { justify-self: start; padding: 9px 16px; border: 1px solid transparent; border-radius: 8px; font: 650 14px/1.3 var(--f-text); margin: 4px 0; cursor: default; }
 .themebox code { font-size: 11.5px; }
 .cc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
 @media (max-width: 720px) { .cc { grid-template-columns: 1fr; } }

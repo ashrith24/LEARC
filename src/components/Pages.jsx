@@ -6,7 +6,7 @@ import { Crumbs, useReveal } from './Chrome';
 import { CategoryArt } from './CategoryArt';
 import { useScrollSpy, Toc, MobileToc } from './TopicPage';
 import { getDemo } from '../demos/registry';
-import { designTrends } from '../content/design-trends';
+export { DesignTrends } from './DesignTrendsPage';
 const lvlColor = (l) => l === 'Beginner' ? 'var(--ok)' : l === 'Intermediate' ? 'var(--warn)' : 'var(--err)';
 const Lvl = ({ l }) => <span className="chip"><span className="dot" style={{ color: lvlColor(l) }}/>{l}</span>;
 const title = (s) => { document.title = `Learc — ${s}`; };
@@ -57,41 +57,6 @@ export function UIIndex() {
       <div className="reveal"><Catalogue /></div>
     </div>);
 }
-export function DesignTrends() {
-    const [year, setYear] = useState(2026);
-    const selected = designTrends.find(item => item.year === year) || designTrends[0];
-    useEffect(() => title('Design Trends — year by year'), []);
-    return (<div className="wrap trends-page">
-      <Crumbs items={[['Home', href.home], ['Design Trends']]}/>
-      <header className="page-head">
-        <span className="label">2007 — 2026 · interface evolution</span>
-        <h1>Design trends, year by year.</h1>
-        <p>Explore how interface styles and components changed over time. Select a year to see a milestone and the patterns it brought into everyday product UI.</p>
-      </header>
-      <div className="trend-timeline" aria-label="Select a year">
-        {designTrends.map(item => <button key={item.year} type="button" className={item.year === year ? 'selected' : ''} aria-pressed={item.year === year} onClick={() => setYear(item.year)}>{item.year}</button>)}
-      </div>
-      <section className="trend-detail" aria-live="polite" key={selected.year}>
-        <div className="trend-year"><span>Selected year</span><b>{selected.year}</b></div>
-        <div className="trend-story">
-          <span className="label">{selected.example}</span>
-          <h2>{selected.title}</h2>
-          <p>{selected.evolution}</p>
-          <div className="trend-component"><span className="label">Components in focus</span><b>{selected.component}</b></div>
-        </div>
-        <div className={'trend-preview trend-' + selected.visual} aria-label={`${selected.year} interface style illustration`}>
-          <div className="trend-window"><div className="trend-window-bar"><i/><i/><i/><span>{selected.example}</span></div><div className="trend-window-content"><div className="trend-window-nav"><b>{selected.year}</b><span/><span/><span/></div><div className="trend-window-block"><small>{selected.component}</small><b>{selected.title}</b><i/><button type="button" tabIndex={-1}>Explore interface</button></div><div className="trend-window-card"><i/><i/><i/></div></div></div>
-          <span className="trend-preview-caption">Illustrative component study</span>
-        </div>
-      </section>
-      <nav className="trend-neighbors" aria-label="Browse neighboring years">
-        <button type="button" disabled={year === designTrends[0].year} onClick={() => setYear(year - 1)}>← {year - 1}</button>
-        <span>{designTrends.indexOf(selected) + 1} of {designTrends.length} years</span>
-        <button type="button" disabled={year === designTrends[designTrends.length - 1].year} onClick={() => setYear(year + 1)}>{year + 1} →</button>
-      </nav>
-    </div>);
-}
-/* ───────── Category landing ───────── */
 export function CategoryPage({ id }) {
     const c = catById[id];
     const ts = topicsIn(id);

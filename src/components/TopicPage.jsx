@@ -35,13 +35,18 @@ export function jumpTo(id) {
     const el = document.getElementById(id);
     if (!el)
         return;
+    for (let parent = el.parentElement; parent; parent = parent.parentElement)
+        if (parent.tagName === 'DETAILS')
+            parent.open = true;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-    const h = el.querySelector('h2, h3, h4');
-    if (h) {
-        h.setAttribute('tabindex', '-1');
-        h.focus({ preventScroll: true });
-    }
+    requestAnimationFrame(() => {
+        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        const h = el.querySelector('h2, h3, h4');
+        if (h) {
+            h.setAttribute('tabindex', '-1');
+            h.focus({ preventScroll: true });
+        }
+    });
 }
 export function Toc({ secs, active, extra }) {
     const meter = useRef(null);
@@ -130,15 +135,18 @@ function TypeList({ items, groups, guidance, examples, number, developerNotes = 
         </Fragment>;
     };
     const groupNames = [...grouped.keys()];
+    const categories = [
+        ...groupNames.map(name => ({ name, items: grouped.get(name) })),
+        ...(ungrouped.length ? [{ name: groupNames.length ? 'Other variants' : 'Types & variants', items: ungrouped }] : []),
+    ];
     return <div className="type-list">
-      {groupNames.map(name => <details className="type-category" key={name}>
-        <summary><span>{name}</span><span className="type-category-meta">{grouped.get(name).length} types <Icon n="chev" s={15}/></span></summary>
-        <div className="type-category-content">{grouped.get(name).map(renderEntry)}</div>
+      {categories.length === 1 ? <section className="type-category type-category-single">
+        <h3 className="type-category-heading"><span>{categories[0].name}</span><span className="type-category-meta">{categories[0].items.length} types</span></h3>
+        <div className="type-category-content">{categories[0].items.map(renderEntry)}</div>
+      </section> : categories.map(category => <details className="type-category" key={category.name}>
+        <summary><span>{category.name}</span><span className="type-category-meta">{category.items.length} types <Icon n="chev" s={15}/></span></summary>
+        <div className="type-category-content">{category.items.map(renderEntry)}</div>
       </details>)}
-      {ungrouped.length ? <details className="type-category">
-        <summary><span>{groupNames.length ? 'Other variants' : 'Types & variants'}</span><span className="type-category-meta">{ungrouped.length} types <Icon n="chev" s={15}/></span></summary>
-        <div className="type-category-content">{ungrouped.map(renderEntry)}</div>
-      </details> : null}
     </div>;
 }
 export function TopicPage({ id }) {

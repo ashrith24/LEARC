@@ -91,18 +91,22 @@ register({
     ramps: () => {
         const [h, setH] = useState(205);
         const [th, setTh] = useState('Dark theme');
+        const [selectedStep, setSelectedStep] = useState(400);
         const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
         const L = (i) => 96 - i * 9.2;
         const dark = th === 'Dark theme';
         const pick = (i) => hslToHex(h, 85, L(i));
-        const map = dark ? { bg: hslToHex(h, 25, 6), surface: hslToHex(h, 18, 12), text: hslToHex(h, 20, 96), action: pick(4) } : { bg: '#FFFFFF', surface: hslToHex(h, 30, 97), text: hslToHex(h, 30, 12), action: pick(6) };
-        return (<Frame label="Ramp → tokens → theme" controls={<><Range label="Hue" value={h} min={0} max={359} onChange={setH} unit="°"/><Seg label="Theme" options={['Dark theme', 'Light theme']} value={th} onChange={setTh}/></>} caption="The same semantic token (action.primary) maps to step 400 in dark and 600 in light so both pass contrast.">
-        <div className="ramp">{steps.map((s, i) => <div key={s} style={{ background: pick(i), color: L(i) > 55 ? '#0B0D12' : '#F9FAFC' }}><b>{s}</b><code>{pick(i).toUpperCase()}</code></div>)}</div>
+        const selectedIndex = steps.indexOf(selectedStep);
+        const action = pick(selectedIndex);
+        const actionText = ratio(action, '#0B0D12') >= ratio(action, '#FFFFFF') ? '#0B0D12' : '#FFFFFF';
+        const map = dark ? { bg: hslToHex(h, 25, 6), surface: hslToHex(h, 18, 12), text: hslToHex(h, 20, 96) } : { bg: '#FFFFFF', surface: hslToHex(h, 30, 97), text: hslToHex(h, 30, 12) };
+        return (<Frame label="Ramp → tokens → theme" controls={<><Range label="Hue" value={h} min={0} max={359} onChange={setH} unit="°"/><Seg label="Theme" options={['Dark theme', 'Light theme']} value={th} onChange={setTh}/></>} caption="Choose any 50–900 ramp step to apply it to the primary action in either theme.">
+        <div className="ramp" role="group" aria-label="Choose primary action color step">{steps.map((s, i) => <button type="button" key={s} aria-pressed={selectedStep === s} aria-label={`Use step ${s}, ${pick(i).toUpperCase()}`} onClick={() => setSelectedStep(s)} style={{ background: pick(i), color: L(i) > 55 ? '#0B0D12' : '#F9FAFC' }}><b>{s}</b><code>{pick(i).toUpperCase()}</code></button>)}</div>
         <div className="themebox" style={{ background: map.bg, color: map.text }}>
           <div style={{ background: map.surface, border: `1px solid ${dark ? '#ffffff14' : '#00000014'}` }}>
             <b>Theme preview</b><span style={{ opacity: .75 }}>surface · text · action</span>
-            <span className="tb-btn" style={{ background: map.action, color: dark ? '#0B0D12' : '#fff' }}>Primary action</span>
-            <code style={{ opacity: .8 }}>action.primary → {dark ? 'blue-400' : 'blue-600'} · {ratio(map.action, map.surface).toFixed(2)}:1 vs surface</code>
+            <button type="button" className="tb-btn" style={{ background: action, color: actionText, borderColor: actionText === '#0B0D12' ? '#0B0D12' : '#FFFFFF' }}>Primary action</button>
+            <code style={{ opacity: .8 }}>action.primary → hue-{h} / {selectedStep} · {ratio(action, map.surface).toFixed(2)}:1 vs surface</code>
           </div>
         </div>
       </Frame>);
