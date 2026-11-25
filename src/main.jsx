@@ -1,6 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { installLinkInterceptor } from './router';
+import './styles/tokens.css';
+import './styles/base.css';
+import './styles/app.css';
+import './styles/demos.css';
+import './styles/styles16.css';
 import './demos';
 installLinkInterceptor();
 createRoot(document.getElementById('root')).render(<App />);

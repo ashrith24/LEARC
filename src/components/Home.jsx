@@ -15,7 +15,7 @@ export function Home({ onSearch }) {
         <div className="horizon" aria-hidden="true"/>
         <div className="hero-body">
           <span className="hero-index"><b>§ 01</b> A reference for interface design</span>
-          <span className="annot a1">fig. 01 — the anatomy of an interface</span>
+          <span className="annot a1">Learn · Explore · Apply · Refine · Create</span>
                     <h1 className="hero-title" id="hero-title">
             <span className="l l1">Every</span>
             <span className="l l2"><span className="ital">interface,</span></span>

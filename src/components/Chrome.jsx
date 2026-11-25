@@ -158,6 +158,12 @@ export function Footer() {
         <div>
           <a className="brand" href={href.home} style={{ marginBottom: 12 }}><img className="brand-mark" src={brandMark} alt="" aria-hidden="true"/><span>Learc</span></a>
           <p style={{ maxWidth: '40ch' }}>Learc is a UI design reference with {order.length} lessons across 19 topics. The UX Encyclopedia is the final planned release.</p>
+          <div className="footer-credit">
+            <span>Developed by Ashrith</span>
+            <a className="footer-social" href="https://github.com/ashrith24" target="_blank" rel="noopener noreferrer" aria-label="Ashrith on GitHub" title="GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 1C5.923 1 1 5.923 1 12c0 4.867 3.149 8.979 7.521 10.436.55.096.756-.233.756-.522 0-.262-.013-.953-.013-1.87-2.764.509-3.479-.674-3.699-1.292-.124-.317-.66-1.293-1.127-1.554-.385-.207-.936-.715-.014-.729.866-.014 1.485.797 1.691 1.128.99 1.663 2.571 1.196 3.204.907.096-.715.385-1.196.701-1.471-2.448-.275-5.007-1.224-5.007-5.447 0-1.196.426-2.186 1.127-2.956-.11-.275-.495-1.402.11-2.915 0 0 .921-.289 3.025 1.128a10.193 10.193 0 0 1 5.502 0c2.104-1.43 3.025-1.128 3.025-1.128.605 1.513.22 2.64.11 2.915.701.77 1.127 1.747 1.127 2.956 0 4.237-2.572 5.172-5.02 5.447.399.344.743 1.004.743 2.035 0 1.471-.014 2.654-.014 3.025 0 .289.206.632.77.522C19.865 20.979 23 16.854 23 12c0-6.077-4.923-11-11-11Z"/></svg>
+            </a>
+          </div>
         </div>
         <div><h3>Explore</h3><a href={href.ui}>All topics</a><a href={href.cat('foundations')}>Foundations</a><a href={href.cat('elements')}>Elements</a><a href={href.cat('page-layouts')}>Page layouts</a></div>
         <div><h3>Learn</h3><a href={href.paths}>Learning paths ({paths.length})</a><a href={href.compare}>Comparisons ({comparisons.length})</a><a href={href.glossary}>Glossary</a></div>
